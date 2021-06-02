@@ -20,7 +20,7 @@ $quoteList = getAllQuote();
                     <th>Auteur</th>
                 </tr>
 
-                <?php foreach($data as $citations): ?>
+                <?php foreach($quoteList as $citations): ?>
                 <tr class="justify-content-center">
                     <td class="col-2"><?= $citations["id"]?></td>
                     <td class="col-10"><?= $citations["texte"]?></td>

@@ -17,3 +17,14 @@ function getPDO(){
 
     return new PDO(DSN, DB_USER, DB_PASS, $options);
 };
+
+/**
+ * retourne vrai si les conditions du formulaire sont postées
+ * @author Florian Colin
+ * @date 02.06.2021
+ * @return boolean
+ */
+
+ function isPosted(){
+    return count($_POST) > 0;
+ }

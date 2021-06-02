@@ -26,9 +26,6 @@ $quote = getRandomQuote();
             </figcaption>
         </figure>
     </div>
-
-    <a href="/liste-des-citations.php">Liste des citations</a>
-
 </body>
 
 </html>
