@@ -27,4 +27,15 @@ function getPDO(){
 
  function isPosted(){
     return count($_POST) > 0;
- }
+ };
+
+ /**
+  * Fonction retourne vrai si les conditions de la suppression sont remplies
+  * @author Florian Colin 
+  * @date 03.06.2021
+  * @return boolean
+  */
+
+  function isDeleted(){
+      return count($_GET) > 0;
+  }

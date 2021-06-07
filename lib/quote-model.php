@@ -20,7 +20,7 @@ $query = $cn->query("SELECT * FROM citations ORDER BY RAND() LIMIT 1 ");
 $quote = $query->fetch(PDO::FETCH_ASSOC);
 
 return $quote;
-};
+}
 
 /**
  * retourne les citations à partir d'une requête sur la bd
@@ -42,7 +42,7 @@ $query = $cn->query($sql);
 $quoteList= $query->fetchAll(PDO::FETCH_ASSOC);
 
 return $quoteList;
-};
+}
 
 /**
  * Validation des données contenues dans $data
@@ -102,7 +102,7 @@ function insertQuote(array $data){
     // Validation de la saisie
     $errors = validateInput($data);
     
-    // INsertion uniquement s'il n'y a pas d'erreurs
+    // Insertion uniquement s'il n'y a pas d'erreurs
     if(count($errors) == 0) {
         try {
             insertQuote($data);
@@ -115,4 +115,57 @@ function insertQuote(array $data){
  }
 
  return $errors;
+}
+
+
+function udpateQuote(array $data, $id){
+    // On ajoute la nouvelle citation
+    $pdo = getPDO();
+    // La requête SQL
+    $sql = "UPDATE citations SET texte=?, auteur=? WHERE id=$id";
+    // Préparation de la requête
+    $statement = $pdo->prepare($sql);
+    // Paramètres
+    $params = [$data["texte"], $data["auteur"]];
+    // Exécution des paramètres
+    $statement->execute($params);
+}
+
+
+function getSelectedQuote($id){
+    // Création de la connexion
+    $cn = getPDO();
+    
+    // Requête SQL sur la BD
+    $query =$cn->query("SELECT * FROM citations WHERE id=$id");
+    
+    //Récupération des résultats dans une variable
+    $selectedQuote= $query->fetch(PDO::FETCH_ASSOC);
+    
+    return $selectedQuote;
+}
+
+function handleUpdateQuoteForm(){
+    $data = filter_input_array(INPUT_POST, [
+    "texte" => FILTER_SANITIZE_STRING,
+    "auteur" => FILTER_SANITIZE_STRING
+    ]);
+    // Validation de la saisie
+    $errors = validateInput($data);
+        
+    // Insertion uniquement s'il n'y a pas d'erreurs
+    if(count($errors) == 0) {
+        try {
+        // Récupérer le paramètre id
+        $id = filter_input(INPUT_GET, "id");
+        udpateQuote($data, $id);
+        // Redirection vers la liste des citations
+        header("location:liste-des-citations.php");
+        exit;
+        } catch (Exception $ex) {
+            $error[] = "Il y a une erreur dans l'exécution de la requête";
+        }
+    }
+    
+    return $errors;
 }

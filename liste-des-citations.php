@@ -18,6 +18,8 @@ $quoteList = getAllQuote();
                     <th>Id</th>
                     <th>Citation</th>
                     <th>Auteur</th>
+                    <th></th>
+                    <th></th>
                 </tr>
 
                 <?php foreach($quoteList as $citations): ?>
@@ -25,6 +27,14 @@ $quoteList = getAllQuote();
                     <td class="col-2"><?= $citations["id"]?></td>
                     <td class="col-10"><?= $citations["texte"]?></td>
                     <td class="col-4"><?= $citations["auteur"]?></td>
+                    <!-- Insertion du bouton supprimer -->
+                    <td>
+                    <a href="delete-citations.php?id=<?= $citations["id"] ?>" class="btn btn-warning delete">Supprimer</a>
+                    </td>
+                    <!-- Insertion du bouton modifier -->
+                    <td>
+                    <a href="modifier-citations.php?id=<?= $citations["id"] ?>" class="btn btn-warning delete">Modifier</a>
+                    </td>
                 </tr>
                 <?php endforeach?>
             </table>
